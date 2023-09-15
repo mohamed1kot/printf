@@ -6,23 +6,11 @@
 
 
 The printf function sends formatted output to stdout.
-A custom _printf() for learning purposes was developed by cohort  #9 students mohamed and yasmein.
+A custom _printf() for learning purposes was developed by cohort  #9 students mohamed and yasmeen.
 _printf() function format string is a character string, beginning and ending in its initial shift state, if any. 
 These arguments are placed using the percentage '%' operator
 
 ------------
-
-
-#### Resources
-
-------------
-
-
-Secrets of printfby Don colton
-https://www.cypress.com/file/54761/download
-
-------------
-
 
 
 #### Authorized functions and macros
@@ -52,7 +40,7 @@ The code must be compiled this way:
 
 As a consequence, be careful not to push any c file containing a main function in the root directory of your project (you could have a test folder containing all your tests files including main functions)
 
-The main files will include your main header file (holberton.h): **#include holberton.h**
+The main files will include your main header file (main.h): **#include main.h**
 
 ------------
 
@@ -65,8 +53,8 @@ The main files will include your main header file (holberton.h): **#include holb
 **Use - General:** _printf("format string", var1, var2, ...);
 
 **Examples:**
- - Basic String: _printf("%s Holberton", "Hello");`
-	 - Output: Hello Holberton
+ - Basic String: _printf("%s ALX_SE", "Hello");`
+	 - Output: Hello ALX_SE
 
 - Print integers: _printf("This is an array element: arr[%d]:%c", 32, arr[32]);`
 	- Output: This is an array element arr[32]:A
@@ -237,7 +225,7 @@ Handle the following custom conversion specifier:
 16. ###### *
 All the above options work well together.
 
-### Authors &copy;
+### Authors;
 
 - mohamed
 - yasmeen
