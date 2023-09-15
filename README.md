@@ -36,7 +36,7 @@ va_arg (man 3 va_arg)
 
 The code must be compiled this way:
 
-**$ gcc -Wall -Werror -Wextra -pedantic *.c**
+**$ gcc -Wall -Werror -Wextra -pedantic *.c***
 
 As a consequence, be careful not to push any c file containing a main function in the root directory of your project (you could have a test folder containing all your tests files including main functions)
 
@@ -222,8 +222,7 @@ Handle the following custom conversion specifier:
 Handle the following custom conversion specifier:
 - R: prints the rot13'ed string
 
-16. ###### *
-All the above options work well together.
+16. ###### All the above options work well together.
 
 ### Authors;
 
