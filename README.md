@@ -6,7 +6,7 @@
 
 
 The printf function sends formatted output to stdout.
-A custom _printf() for learning purposes was developed by cohort  #9 students Jimmer and Edward Ortiz.
+A custom _printf() for learning purposes was developed by cohort  #9 students mohamed and yasmein.
 _printf() function format string is a character string, beginning and ending in its initial shift state, if any. 
 These arguments are placed using the percentage '%' operator
 
@@ -138,7 +138,7 @@ Specifier                |Output                        |Examples |
 |Name                |Information                        |Relevant Files                         |
 |----------------|-------------------------------|-----------------------------|
 |`man_3_printf`|Man page of the _printf() function.| `None` |
-|`holberton.h`	| Header file with the data type struct, standard libraries and custom prototypes.| `*.c compilation` |
+|`main.h`	| Header file with the data type struct, standard libraries and custom prototypes.| `*.c compilation` |
 |`_printf.c`|Main printf function file. Calls other functions.|`printf_(name of var).c file` |
 |`printf_37.c`|Contains percentage print function.|`None` |
 |`printf_int.c` | Contains decimal and integer functions. | `None` | 
@@ -239,5 +239,5 @@ All the above options work well together.
 
 ### Authors &copy;
 
-- Jimmer Hernandez
-- Edward Ortiz
+- mohamed
+- yasmeen
