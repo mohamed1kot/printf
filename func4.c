@@ -12,24 +12,24 @@
 
 int get_precision(const char *format, int *i, va_list list)
 {
-	int curr_i = *i + 1;
+	int curr = *i + 1;
 	int precision = -1;
 
-	if (format[curr_i] != '.')
+	if (format[curr] != '.')
 		return (precision);
 
 	precision = 0;
 
-	for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
+	for (curr += 1; format[curr] != '\0'; curr++)
 	{
-		if (is_digit(format[curr_i]))
+		if (is_digit(format[curr]))
 		{
 			precision *= 10;
-			precision += format[curr_i] - '0';
+			precision += format[curr] - '0';
 		}
-		else if (format[curr_i] == '*')
+		else if (format[curr] == '*')
 		{
-			curr_i++;
+			curr++;
 			precision = va_arg(list, int);
 			break;
 		}
@@ -37,7 +37,7 @@ int get_precision(const char *format, int *i, va_list list)
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = curr - 1;
 
 	return (precision);
 }
@@ -53,20 +53,20 @@ int get_precision(const char *format, int *i, va_list list)
 
 int get_size(const char *format, int *i)
 {
-	int curr_i = *i + 1;
-	int size = 0;
+	int curr = *i + 1;
+	int s = 0;
 
-	if (format[curr_i] == 'l')
-		size = S_LONG;
-	else if (format[curr_i] == 'h')
-		size = S_SHORT;
+	if (format[curr] == 'l')
+		s = S_LONG;
+	else if (format[curr] == 'h')
+		s = S_SHORT;
 
-	if (size == 0)
-		*i = curr_i - 1;
+	if (s == 0)
+		*i = curr - 1;
 	else
-		*i = curr_i;
+		*i = curr;
 
-	return (size);
+	return (s);
 }
 
 /**
@@ -81,19 +81,19 @@ int get_size(const char *format, int *i)
 
 int get_width(const char *format, int *i, va_list list)
 {
-	int curr_i;
+	int curr;
 	int width = 0;
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	for (curr = *i + 1; format[curr] != '\0'; curr++)
 	{
-		if (is_digit(format[curr_i]))
+		if (is_digit(format[curr]))
 		{
 			width *= 10;
-			width += format[curr_i] - '0';
+			width += format[curr] - '0';
 		}
-		else if (format[curr_i] == '*')
+		else if (format[curr] == '*')
 		{
-			curr_i++;
+			curr++;
 			width = va_arg(list, int);
 			break;
 		}
@@ -101,7 +101,7 @@ int get_width(const char *format, int *i, va_list list)
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = curr - 1;
 
 	return (width);
 }
@@ -124,7 +124,7 @@ int get_width(const char *format, int *i, va_list list)
 int handle_print(const char *fmt, int *ind, va_list list,
 		char buffer[], int flags, int width, int precision, int size)
 {
-	int i, unknow_len = 0, printed_chars = -1;
+	int i, unknow = 0, print_chars = -1;
 	fmt_t fmt_types[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'i', print_int}, {'d', print_int}, {'b', print_binary},
@@ -140,9 +140,9 @@ int handle_print(const char *fmt, int *ind, va_list list,
 	{
 		if (fmt[*ind] == '\0')
 			return (-1);
-		unknow_len += write(1, "%%", 1);
+		unknow += write(1, "%%", 1);
 		if (fmt[*ind - 1] == ' ')
-			unknow_len += write(1, " ", 1);
+			unknow += write(1, " ", 1);
 		else if (width)
 		{
 			--(*ind);
@@ -152,8 +152,8 @@ int handle_print(const char *fmt, int *ind, va_list list,
 				--(*ind);
 			return (1);
 		}
-		unknow_len += write(1, &fmt[*ind], 1);
-		return (unknow_len);
+		unknow += write(1, &fmt[*ind], 1);
+		return (unknow);
 	}
-	return (printed_chars);
+	return (print_chars);
 }

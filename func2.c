@@ -16,8 +16,8 @@
 int print_pointer(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	char extra_c = 0, padd = ' ';
-	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1;
+	char ex_c = 0, padd = ' ';
+	int ind = BUFF_SIZE - 2, len = 2, padd_start = 1;
 	unsigned long num_addrs;
 	char map_to[] = "0123456789abcdef";
 	void *addrs = va_arg(types, void *);
@@ -37,19 +37,19 @@ int print_pointer(va_list types, char buffer[],
 	{
 		buffer[ind--] = map_to[num_addrs % 16];
 		num_addrs /= 16;
-		length++;
+		len++;
 	}
 
 	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
 	if (flags & F_PLUS)
-		extra_c = '+', length++;
+		ex_c = '+', len++;
 	else if (flags & F_SPACE)
-		extra_c = ' ', length++;
+		ex_c = ' ', len++;
 
 	ind++;
-	return (write_pointer(buffer, ind, length,
-				width, flags, padd, extra_c, padd_start));
+	return (write_pointer(buffer, ind, len,
+				width, flags, padd, ex_c, padd_start));
 }
 
 /**
@@ -68,7 +68,7 @@ int print_pointer(va_list types, char buffer[],
 int print_non_printable(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	int i = 0, offset = 0;
+	int i = 0, off_set = 0;
 	char *str = va_arg(types, char *);
 
 	(void)(flags);
@@ -82,16 +82,16 @@ int print_non_printable(va_list types, char buffer[],
 	while (str[i] != '\0')
 	{
 		if (is_printable(str[i]))
-			buffer[i + offset] = str[i];
+			buffer[i + off_set] = str[i];
 		else
-			offset += append_hexa_code(str[i], buffer, i + offset);
+			off_set += append_hexa_code(str[i], buffer, i + off_set);
 
 		i++;
 	}
 
-	buffer[i + offset] = '\0';
+	buffer[i + off_set] = '\0';
 
-	return (write(1, buffer, i + offset));
+	return (write(1, buffer, i + off_set));
 }
 
 /**
@@ -110,33 +110,33 @@ int print_non_printable(va_list types, char buffer[],
 int print_reverse(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	char *str;
-	int i, count = 0;
+	char *ptr;
+	int i, c = 0;
 
 	(void)(buffer);
 	(void)(flags);
 	(void)(width);
 	(void)(size);
 
-	str = va_arg(types, char *);
+	ptr = va_arg(types, char *);
 
-	if (str == NULL)
+	if (ptr == NULL)
 	{
 		(void)(precision);
 
-		str = ")Null(";
+		ptr = ")Null(";
 	}
-	for (i = 0; str[i]; i++)
+	for (i = 0; ptr[i]; i++)
 		;
 
 	for (i = i - 1; i >= 0; i--)
 	{
-		char z = str[i];
+		char z = ptr[i];
 
 		write(1, &z, 1);
-		count++;
+		c++;
 	}
-	return (count);
+	return (c);
 }
 
 /**
@@ -156,41 +156,41 @@ int print_rot13string(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
 	char x;
-	char *str;
+	char *ptr;
 	unsigned int i, j;
-	int count = 0;
+	int c = 0;
 	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	str = va_arg(types, char *);
+	ptr = va_arg(types, char *);
 	(void)(buffer);
 	(void)(flags);
 	(void)(width);
 	(void)(precision);
 	(void)(size);
 
-	if (str == NULL)
-		str = "(AHYY)";
-	for (i = 0; str[i]; i++)
+	if (ptr == NULL)
+		ptr = "(AHYY)";
+	for (i = 0; ptr[i]; i++)
 	{
 		for (j = 0; in[j]; j++)
 		{
-			if (in[j] == str[i])
+			if (in[j] == ptr[i])
 			{
 				x = out[j];
 				write(1, &x, 1);
-				count++;
+				c++;
 				break;
 			}
 		}
 		if (!in[j])
 		{
-			x = str[i];
+			x = ptr[i];
 			write(1, &x, 1);
-			count++;
+			c++;
 		}
 	}
-	return (count);
+	return (c);
 }
 
 /**
@@ -209,7 +209,7 @@ int print_rot13string(va_list types, char buffer[],
 int print_char(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	char c = va_arg(types, int);
+	char ch = va_arg(types, int);
 
-	return (handle_write_char(c, buffer, flags, width, precision, size));
+	return (handle_write_char(ch, buffer, flags, width, precision, size));
 }

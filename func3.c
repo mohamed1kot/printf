@@ -16,45 +16,45 @@
 int print_string(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	int length = 0, i;
-	char *str = va_arg(types, char *);
+	int len = 0, i;
+	char *ptr = va_arg(types, char *);
 
 	(void)(buffer);
 	(void)(flags);
 	(void)(width);
 	(void)(size);
-	if (str == NULL)
+	if (ptr == NULL)
 	{
-		str = "(null)";
+		ptr = "(null)";
 		if (precision >= 6)
-			str = "      ";
+			ptr = "      ";
 	}
 
-	while (str[length] != '\0')
-		length++;
+	while (ptr[len] != '\0')
+		len++;
 
-	if (precision >= 0 && precision < length)
-		length = precision;
+	if (precision >= 0 && precision < len)
+		len = precision;
 
-	if (width > length)
+	if (width > len)
 	{
 		if (flags & F_MINUS)
 		{
-			write(1, &str[0], length);
-			for (i = width - length; i > 0; i--)
+			write(1, &ptr[0], len);
+			for (i = width - len; i > 0; i--)
 				write(1, " ", 1);
 			return (width);
 		}
 		else
 		{
-			for (i = width - length; i > 0; i--)
+			for (i = width - len; i > 0; i--)
 				write(1, " ", 1);
-			write(1, &str[0], length);
+			write(1, &ptr[0], len);
 			return (width);
 		}
 	}
 
-	return (write(1, str, length));
+	return (write(1, ptr, len));
 }
 
 /**
@@ -97,7 +97,7 @@ int print_int(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
-	int is_negative = 0;
+	int is_neg = 0;
 	long int n = va_arg(types, long int);
 	unsigned long int num;
 
@@ -112,7 +112,7 @@ int print_int(va_list types, char buffer[],
 	if (n < 0)
 	{
 		num = (unsigned long int)((-1) * n);
-		is_negative = 1;
+		is_neg = 1;
 	}
 
 	while (num > 0)
@@ -123,7 +123,7 @@ int print_int(va_list types, char buffer[],
 
 	i++;
 
-	return (write_number(is_negative, i, buffer, flags, width, precision, size));
+	return (write_number(is_neg, i, buffer, flags, width, precision, size));
 }
 
 /**
@@ -142,9 +142,9 @@ int print_int(va_list types, char buffer[],
 int print_binary(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	unsigned int n, m, i, sum;
+	unsigned int n, m, i, s;
 	unsigned int a[32];
-	int count;
+	int c;
 
 	(void)(buffer);
 	(void)(flags);
@@ -160,18 +160,18 @@ int print_binary(va_list types, char buffer[],
 		m /= 2;
 		a[i] = (n / m) % 2;
 	}
-	for (i = 0, sum = 0, count = 0; i < 32; i++)
+	for (i = 0, s = 0, c = 0; i < 32; i++)
 	{
-		sum += a[i];
-		if (sum || i == 31)
+		s += a[i];
+		if (s || i == 31)
 		{
 			char z = '0' + a[i];
 
 			write(1, &z, 1);
-			count++;
+			c++;
 		}
 	}
-	return (count);
+	return (c);
 }
 
 /**
@@ -186,7 +186,7 @@ int print_binary(va_list types, char buffer[],
 int get_flags(const char *format, int *i)
 {
 	int j, curr_i;
-	int flags = 0;
+	int flag = 0;
 	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
 	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
@@ -195,7 +195,7 @@ int get_flags(const char *format, int *i)
 		for (j = 0; FLAGS_CH[j] != '\0'; j++)
 			if (format[curr_i] == FLAGS_CH[j])
 			{
-				flags |= FLAGS_ARR[j];
+				flag |= FLAGS_ARR[j];
 				break;
 			}
 
@@ -205,6 +205,5 @@ int get_flags(const char *format, int *i)
 
 	*i = curr_i - 1;
 
-	return (flags);
+	return (flag);
 }
-
