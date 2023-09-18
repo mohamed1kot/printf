@@ -7,7 +7,7 @@
 
 The printf function sends formatted output to stdout.
 A custom _printf() for learning purposes was developed by cohort  #9 students Yasmeen and Mohamed.
-_printf() function format string is a character string, beginning and ending in its initial shift state, if any. 
+_printf() function format string is a character string, beginning and ending in its initial shift state, if any.
 These arguments are placed using the percentage '%' operator
 
 ------------
@@ -122,7 +122,7 @@ Specifier                |Output                        |Examples |
 
 ------------
 
-0. ###### I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life1.  I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life. 
+0. ###### I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life1.  I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life.
 Write a function that produces output according to a format.
 Handle the following conversion specifiers:
 - c
@@ -163,7 +163,7 @@ Handle the following conversion specifier: p
 Handle the following flag characters for non-custom conversion specifiers:
 - ´+´
 - space
-- ´#´ 
+- ´#´
 
 9. ###### Sarcasm is lost in print
 Handle the following length modifiers for non-custom conversion specifiers:
@@ -187,7 +187,7 @@ Handle the - flag character for non-custom conversion specifiers.
 Handle the following custom conversion specifier:
  - r : prints the reversed string
 
-15. ###### The flood of print has turned reading into a process of gulping rather than savoring 
+15. ###### The flood of print has turned reading into a process of gulping rather than savoring
 Handle the following custom conversion specifier:
 - R: prints the rot13'ed string
 
